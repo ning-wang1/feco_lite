@@ -2,6 +2,6 @@
 *.json
 /others/*
 /result/*
-/data/*
+/dataset/*
 /__pycache__/*
 /.idea

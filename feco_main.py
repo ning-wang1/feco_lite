@@ -3,6 +3,7 @@ import tflite_runtime.interpreter as tflite
 import numpy as np
 from setup_BaIoT import BaIoT
 import time
+import os
 import pandas as pd
 
 
@@ -33,16 +34,22 @@ output_details = interpreter.get_output_details()
 # Read the image and decode to a tensor
 device_name = DEVICE_NAMES[1]
 data = BaIoT(device_name)
-x_test, y_test= data.x_test, data.y_test
+x_test, y_test = data.x_test, data.y_test
 
 # load the normal template and the threshold for testing
-reference = np.load('/home/ning/extens/federated_contrastive/checkpoints/vec1.npy')
-th = np.load('/home/ning/extens/federated_contrastive/checkpoints/threshold1.npy')
+file_dir = os.getcwd()
+reference = np.load(os.path.join(file_dir, 'utils/vec1.npy'))
+th = np.load(os.path.join(file_dir, 'utils/threshold1.npy'))
 
 # Preprocess the image to required size and cast
 input_shape = input_details[0]['shape']
 
-for idx in range(10):
+# testing
+data_num = x_test.shape[0]
+idxes = list(range(data_num))
+np.random.shuffle(idxes)
+
+for idx in idxes[:100]:
     input_tensor = np.array(np.expand_dims(x_test[idx,:], 0), dtype=np.float32)
 
     # set the tensor to point to the input data to be inferred

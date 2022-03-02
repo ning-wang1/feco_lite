@@ -15,8 +15,8 @@ FILE_PATHS = {'Danmini_Doorbell': 'dataset/IoTbot/Danmini_Doorbell',
               'SimpleHome_XCS7_1002_WHT_Security_Camera': 'dataset/IoTbot/SimpleHome_XCS7_1002_WHT_Security_Camera',
               'SimpleHome_XCS7_1003_WHT_Security_Camera': 'dataset/IoTbot/SimpleHome_XCS7_1003_WHT_Security_Camera'
               }
-# Dir = os.path.split(os.getcwd())[0]
-Dir = '/home/ning/extens/federated_contrastive/'
+# Dir = '/home/ning/extens/federated_contrastive/'
+Dir = os.getcwd()
 MIRAI = ['ack', 'scan', 'syn', 'udp', 'udpplain']
 GAFGYT = ['combo', 'junk', 'scan', 'tcp', 'udp']
 attack_label_dic = {'ack': 1, 'scan_mirai': 2, 'syn': 3, 'udp_mirai': 4, 'udpplain': 5,
