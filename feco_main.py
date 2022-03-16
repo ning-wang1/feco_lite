@@ -13,7 +13,7 @@ DEVICE_NAMES = ['Danmini_Doorbell', 'Ecobee_Thermostat',
                'Samsung_SNH_1011_N_Webcam', 'SimpleHome_XCS7_1002_WHT_Security_Camera',
                'SimpleHome_XCS7_1003_WHT_Security_Camera']
 
-model_path = 'model.tflite'
+model_path = 'model_int8.tflite'
 
 
 def get_ouput(interpreter):
