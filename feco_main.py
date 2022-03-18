@@ -4,7 +4,6 @@ import numpy as np
 from setup_BaIoT import BaIoT
 import time
 import os
-import pandas as pd
 
 
 DEVICE_NAMES = ['Danmini_Doorbell', 'Ecobee_Thermostat',
@@ -23,8 +22,8 @@ def get_ouput(interpreter):
 
 
 # Load TFLite model and allocate tensors.
-# interpreter = tf.lite.Interpreter(model_path=model_path)
-interpreter = tflite.Interpreter(model_path=model_path)
+interpreter = tf.lite.Interpreter(model_path=model_path)
+# interpreter = tflite.Interpreter(model_path=model_path)
 interpreter.allocate_tensors()
 
 # get input and output tensors

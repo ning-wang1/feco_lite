@@ -4,6 +4,8 @@ import tensorflow as tf
 def model_converter(model_path, save_path, quantization=None):
     # Convert the model
     converter = tf.lite.TFLiteConverter.from_saved_model(model_path) # path to the SavedModel directory
+    converter.experimental_new_converter = True
+    converter.allow_custom_ops = True
     if quantization is None:
         tflite_model = converter.convert()
     elif 'int8' in quantization:
