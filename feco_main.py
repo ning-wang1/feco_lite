@@ -4,6 +4,7 @@ import numpy as np
 from setup_BaIoT import BaIoT
 import time
 import os
+from evaluation import split_evaluate
 
 
 DEVICE_NAMES = ['Danmini_Doorbell', 'Ecobee_Thermostat',
@@ -12,7 +13,9 @@ DEVICE_NAMES = ['Danmini_Doorbell', 'Ecobee_Thermostat',
                'Samsung_SNH_1011_N_Webcam', 'SimpleHome_XCS7_1002_WHT_Security_Camera',
                'SimpleHome_XCS7_1003_WHT_Security_Camera']
 
-model_path = 'model_int8.tflite'
+# model_path = 'model_int8.tflite'
+# model_path = 'model.tflite'
+model_path = 'model_float16.tflite'
 
 
 def get_ouput(interpreter):
@@ -45,23 +48,43 @@ input_shape = input_details[0]['shape']
 
 # testing
 data_num = x_test.shape[0]
-idxes = list(range(data_num))
-np.random.shuffle(idxes)
+# idxes = list(range(data_num))
+# np.random.shuffle(idxes)
 
-for idx in idxes[:100]:
-    input_tensor = np.array(np.expand_dims(x_test[idx,:], 0), dtype=np.float32)
+# for idx in idxes[:100]:
+#     input_tensor = np.array(np.expand_dims(x_test[idx,:], 0), dtype=np.float32)
+#
+#     # set the tensor to point to the input data to be inferred
+#     input_index = interpreter.get_input_details()[0]["index"]
+#     interpreter.set_tensor(input_index, input_tensor)
+#
+#     # Run the inference
+#     time1 = time.time()
+#     interpreter.invoke()
+#     out = get_ouput(interpreter)
+#     score = np.inner(out, reference)
+#     time2 = time.time()
+#
+#     print(f'the processing time is {time2-time1} seconds')
+#     print(f"the detection results is {score < th}")
+#     print(f"the true label is {y_test[idx]}")
+
+
+"""
+Generate and save scores
+"""
+data_num = x_test.shape[0]
+scores = np.zeros(data_num)
+for idx in range(data_num):
+    input_tensor = np.array(np.expand_dims(x_test[idx, :], 0), dtype=np.float32)
 
     # set the tensor to point to the input data to be inferred
     input_index = interpreter.get_input_details()[0]["index"]
     interpreter.set_tensor(input_index, input_tensor)
 
     # Run the inference
-    time1 = time.time()
     interpreter.invoke()
     out = get_ouput(interpreter)
-    score = np.inner(out, reference)
-    time2 = time.time()
+    scores[idx] = np.inner(out, reference)
 
-    print(f'the processing time is {time2-time1} seconds')
-    print(f"the detection results is {score < th}")
-    print(f"the true label is {y_test[idx]}")
+split_evaluate(y_test, scores, plot=True, filename='feco')
