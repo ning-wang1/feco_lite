@@ -117,8 +117,8 @@ if __name__=="__main__":
                'Samsung_SNH_1011_N_Webcam', 'SimpleHome_XCS7_1002_WHT_Security_Camera',
                'SimpleHome_XCS7_1003_WHT_Security_Camera']
     tflite_model_path = 'model.tflite'
-    tflite_model_path = 'model_float16.tflite'
-    # tflite_model_path = 'model_int8.tflite'
+    # tflite_model_path = 'model_float16.tflite'
+    tflite_model_path = 'model_int8.tflite'
     # Load TFLite model and allocate tensors.
     interpreter = tf.lite.Interpreter(model_path=tflite_model_path)
     interpreter.allocate_tensors()
